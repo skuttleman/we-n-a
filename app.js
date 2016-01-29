@@ -11,14 +11,7 @@ server.listen(process.env.PORT || 3000, function() {
   console.log('listening...');
 });
 
-var score = {
-  size: {
-    min: 1,
-    max: 100,
-    value: 50,
-    update: update
-  }
-}
+var score = require('./score');
 
 io.on('connection', function(socket) {
   var initialState = distillScore()
@@ -36,10 +29,6 @@ function updateValue(min, max, value, vote) {
   } else {
     return value
   }
-}
-
-function update(vote) {
-  this.value = updateValue(this.min, this.max, this.value, vote)
 }
 
 function distillScore() {
