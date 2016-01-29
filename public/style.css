@@ -111,4 +111,6 @@ span.vote-button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
