@@ -1,7 +1,7 @@
 var socket = io();
 var creature = new (function() {
   var state = {
-    size: {
+    ratio: {
       height: 300,
       width: 300,
       baseHeight: 300,
@@ -9,9 +9,9 @@ var creature = new (function() {
     }
   };
   this.update = {
-    size: function(size) {
-      state.size.height = state.size.baseHeight * size / 100
-      state.size.width = state.size.baseWidth * (100 - size) / 100
+    ratio: function(ratio) {
+      state.ratio.height = state.ratio.baseHeight * ratio / 100
+      state.ratio.width = state.ratio.baseWidth * (100 - ratio) / 100
     },
     // hue: updateProperty(state, 'hue')
   };
@@ -26,8 +26,12 @@ socket.on('score', function(score) {
 });
 
 $(document).ready(function() {
-  $('.vote-size .up-vote').click(vote('size', 1));
-  $('.vote-size .down-vote').click(vote('size', -1));
+  [
+    'ratio', 'shade', 'color', 'brightness', 'cuteness',
+  ].forEach(function(name) {
+    $('.vote-' + name + ' .up-vote').click(vote(name, 1));
+    $('.vote-' + name + ' .down-vote').click(vote(name, -1));
+  });
 });
 
 function vote(key, value) {
@@ -45,9 +49,9 @@ function updateProperty(state, property) {
 function updateDisplay(state) {
   return function() {
     var $creature = $('.creature');
-    $('.creature').css({
-      'width': state.size.width,
-      'height': state.size.height
+    $creature.css({
+      'width': state.ratio.width,
+      'height': state.ratio.height
     });
   }
 }

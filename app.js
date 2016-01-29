@@ -17,9 +17,10 @@ io.on('connection', function(socket) {
   var initialState = distillScore()
   io.emit('score', initialState)
   socket.on('vote', function(vote) {
-    updateScore(vote)
-    var response = distillScore()
-    io.emit('score', response)
+    updateScore(vote);
+    var response = distillScore();
+    io.emit('score', response);
+    console.log(response);
   });
 });
 

@@ -1,23 +1,23 @@
 module.exports = {
-  size: {
+  ratio: {
     min: 1,
     max: 100,
     value: 50,
     update: update
   },
-  hue: {
+  shade: {
     min: 1,
     max: 100,
     value: 50,
     update: update
   },
-  light: {
+  color: {
     min: 1,
     max: 100,
     value: 50,
     update: update
   },
-  saturation: {
+  brightness: {
     min: 1,
     max: 100,
     value: 50,
