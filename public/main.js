@@ -1,33 +1,48 @@
-var socket = io()
+var socket = io();
 var creature = new (function() {
   var state = {
     size: {
       current: 200,
       base: 200
     }
-  }
+  };
   this.update = {
-    size: function(newSize) {
-      state.size.current = state.size.base * newSize / 100
-      $('.creature').css({
-        'width': state.size.current,
-        'height': state.size.current
-      })
-    }
-  }
-})
+    size: updateProperty(state, 'size'),
+    hue: updateProperty(state, 'hue')
+  };
+  this.updateDisplay = updateDisplay(state);
+})();
 
 socket.on('score', function(score) {
   Object.keys(score).forEach(function(key) {
     creature.update[key](score[key])
+    creature.updateDisplay();
   })
 })
 
 $(document).ready(function() {
-  $('.vote-size .up-vote').click(function() {
-    socket.emit('vote', { size: 1 });
-  });
-  $('.vote-size .down-vote').click(function() {
-    socket.emit('vote', { size: -1 });
-  });
+  $('.vote-size .up-vote').click(vote('size', 1));
+  $('.vote-size .down-vote').click(vote('size', -1));
 });
+
+function vote(key, value) {
+  return function() {
+    socket.emit('vote', { [key]: value});
+  };
+}
+
+function updateProperty(state, property) {
+  return function(value) {
+    state[property].current = state[property].base * value / 100;
+  }
+}
+
+function updateDisplay(state) {
+  return function() {
+    var $creature = $('.creature');
+    $('.creature').css({
+      'width': state.size.current,
+      'height': state.size.current
+    });
+  }
+}

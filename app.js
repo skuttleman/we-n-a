@@ -15,7 +15,7 @@ var score = {
   size: {
     min: 1,
     max: 100,
-    value: 20,
+    value: 50,
     update: update
   }
 }
