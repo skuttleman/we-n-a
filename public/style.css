@@ -12,12 +12,12 @@ body {
   height: 200px;
   background-color: aqua;
 }
-
 .container {
   padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 30vh;
 }
  .buttons {
    padding: 20px;

@@ -13,9 +13,9 @@ server.listen(3000, function() {
 
 var score = {
   size: {
-    min: 0,
+    min: 1,
     max: 100,
-    value: 0,
+    value: 20,
     update: update
   }
 }

@@ -21,5 +21,13 @@ socket.on('score', function(score) {
   Object.keys(score).forEach(function(key) {
     creature.update[key](score[key])
   })
-
 })
+
+$(document).ready(function() {
+  $('.vote-size .up-vote').click(function() {
+    socket.emit('vote', { size: 1 });
+  });
+  $('.vote-size .down-vote').click(function() {
+    socket.emit('vote', { size: -1 });
+  });
+});
