@@ -7,15 +7,21 @@ var io = require('socket.io')(server)
 
 app.use(express.static(__dirname + '/public'))
 
-io.on('connection', function(socket) {
-  var score = {
-    size: {
-      min: 0,
-      max: 100,
-      value: 0,
-      update: update
-    }
+app.listen(3000, function() {
+  console.log('listening...');
+});
+
+
+var score = {
+  size: {
+    min: 0,
+    max: 100,
+    value: 0,
+    update: update
   }
+}
+
+io.on('connection', function(socket) {
   socket.on('vote', function(vote) {
     var response = Object.keys(vote).reduce(function(response, key) {
       score[key].update(vote[key])
