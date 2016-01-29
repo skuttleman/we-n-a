@@ -2,12 +2,17 @@ var socket = io();
 var creature = new (function() {
   var state = {
     size: {
-      current: 200,
-      base: 200
+      height: 300,
+      width: 300,
+      baseHeight: 300,
+      baseWidth: 300
     }
   };
   this.update = {
-    size: updateProperty(state, 'size'),
+    size: function(size) {
+      state.size.height = state.size.baseHeight * size / 100
+      state.size.width = state.size.baseWidth * (100 - size) / 100
+    },
     hue: updateProperty(state, 'hue')
   };
   this.updateDisplay = updateDisplay(state);
@@ -41,8 +46,8 @@ function updateDisplay(state) {
   return function() {
     var $creature = $('.creature');
     $('.creature').css({
-      'width': state.size.current,
-      'height': state.size.current
+      'width': state.size.width,
+      'height': state.size.height
     });
   }
 }
