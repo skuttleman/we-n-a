@@ -20,16 +20,8 @@ io.on('connection', function(socket) {
     updateScore(vote)
     var response = distillScore()
     io.emit('score', response)
-  })
-})
-
-function updateValue(min, max, value, vote) {
-  if (value + vote >= min && value + vote <= max) {
-    return value + vote
-  } else {
-    return value
-  }
-}
+  });
+});
 
 function distillScore() {
   return Object.keys(score).reduce(function(response, key) {

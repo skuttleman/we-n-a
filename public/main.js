@@ -2,23 +2,28 @@ var socket = io();
 var creature = new (function() {
   var state = {
     size: {
-      current: 200,
-      base: 200
+      height: 300,
+      width: 300,
+      baseHeight: 300,
+      baseWidth: 300
     }
   };
   this.update = {
-    size: updateProperty(state, 'size'),
-    hue: updateProperty(state, 'hue')
+    size: function(size) {
+      state.size.height = state.size.baseHeight * size / 100
+      state.size.width = state.size.baseWidth * (100 - size) / 100
+    },
+    // hue: updateProperty(state, 'hue')
   };
   this.updateDisplay = updateDisplay(state);
 })();
 
 socket.on('score', function(score) {
   Object.keys(score).forEach(function(key) {
-    creature.update[key](score[key])
-    creature.updateDisplay();
-  })
-})
+    if (creature.update[key]) creature.update[key](score[key]);
+  });
+  creature.updateDisplay();
+});
 
 $(document).ready(function() {
   $('.vote-size .up-vote').click(vote('size', 1));
@@ -41,8 +46,8 @@ function updateDisplay(state) {
   return function() {
     var $creature = $('.creature');
     $('.creature').css({
-      'width': state.size.current,
-      'height': state.size.current
+      'width': state.size.width,
+      'height': state.size.height
     });
   }
 }

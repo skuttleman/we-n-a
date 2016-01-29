@@ -34,3 +34,11 @@ module.exports = {
 function update(vote) {
   this.value = updateValue(this.min, this.max, this.value, vote)
 }
+
+function updateValue(min, max, value, vote) {
+  if (value + vote >= min && value + vote <= max) {
+    return value + vote
+  } else {
+    return value
+  }
+}
