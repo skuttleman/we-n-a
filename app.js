@@ -7,10 +7,9 @@ var io = require('socket.io')(server)
 
 app.use(express.static(__dirname + '/public'))
 
-app.listen(3000, function() {
+server.listen(3000, function() {
   console.log('listening...');
 });
-
 
 var score = {
   size: {
@@ -22,12 +21,11 @@ var score = {
 }
 
 io.on('connection', function(socket) {
+  var initialState = distillScore()
+  io.emit('score', initialState)
   socket.on('vote', function(vote) {
-    var response = Object.keys(vote).reduce(function(response, key) {
-      score[key].update(vote[key])
-      response[key] = score[key].value
-      return response
-    }, {})
+    updateScore(vote)
+    var response = distillScore()
     io.emit('score', response)
   })
 })
@@ -42,4 +40,17 @@ function updateValue(min, max, value, vote) {
 
 function update(vote) {
   this.value = updateValue(this.min, this.max, this.value, vote)
+}
+
+function distillScore() {
+  return Object.keys(score).reduce(function(response, key) {
+    response[key] = score[key].value
+    return response
+  }, {})
+}
+
+function updateScore(vote) {
+  Object.keys(vote).forEach(function(key) {
+    score[key].update(vote[key])
+  })
 }
