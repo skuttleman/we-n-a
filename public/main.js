@@ -2,16 +2,24 @@ var socket = io();
 var creature = new (function() {
   var state = {
     ratio: {
-      height: 300,
-      width: 300,
+      // height: 300,
+      // width: 300,
       baseHeight: 300,
       baseWidth: 300
     },
     cuteness: {
-      borderRadius: 50
+      // borderRadius: 50
     },
-    brightness : {
+    brightness: {
       base: 100
+    },
+    shade: {
+      base: 100
+    },
+    color: {
+      creatureBase: 360,
+      nucleusBase: 120,
+      organelleBase: 240
     }
   };
   this.update = {
@@ -20,9 +28,17 @@ var creature = new (function() {
       state.ratio.width = state.ratio.baseWidth * (100 - ratio) / 100
     },
     cuteness: function(cutenessFactor) {
-      state.cuteness.borderRadius = cutenessFactor * 2.5
+      state.cuteness.borderRadius = cutenessFactor
     },
-    brightness: updateProperty(state, 'brightness')
+    brightness: function(brightFactor) {
+      state.brightness.current = brightFactor * 2
+    },
+    shade: updateProperty(state, 'shade'),
+    color: function(colorFactor) {
+      state.color.creatureHue = (state.color.creatureBase + (colorFactor * 3)) % 360;
+      state.color.nucleusHue = (state.color.nucleusBase + (colorFactor * 3)) % 360;
+      state.color.organelleHue = (state.color.organelleBase + (colorFactor * 3)) % 360;
+    }
     // hue: updateProperty(state, 'hue')
   };
   this.updateDisplay = updateDisplay(state);
@@ -58,20 +74,26 @@ function updateProperty(state, property) {
 
 function updateDisplay(state) {
   return function() {
-    var $creature = $('.creature');
-    $creature.css({
+    // var $creature = $('.creature');
+    $('.creature').css({
       'width': state.ratio.width,
       'height': state.ratio.height,
       'borderRadius': state.cuteness.borderRadius + '%',
-      'backgroundColor': makeHsl(state)
+      'backgroundColor': makeHsl(state, 'creature')
+    });
+    $('.organelle').css({
+      'backgroundColor': makeHsl(state, 'organelle')
+    });
+    $('.organelle.nucleus').css({
+      'backgroundColor': makeHsl(state, 'nucleus')
     });
   }
 }
 
-function makeHsl(state) {
-  var hue = 200
+function makeHsl(state, property) {
+  var hue = state.color[property + 'Hue'];
   var saturation = state.brightness.current
-  var lightness = 50
+  var lightness = state.shade.current
   var hslString =
     'hsl(' +
       hue + ', ' +

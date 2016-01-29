@@ -12,21 +12,21 @@ module.exports = {
     update: update
   },
   color: {
-    min: 1,
-    max: 100,
-    value: 50,
+    min: -50,
+    max: 50,
+    value: 0,
     update: update
   },
   brightness: {
     min: 1,
-    max: 100,
-    value: 50,
+    max: 50,
+    value: 25,
     update: update
   },
   cuteness: {
     min: 1,
-    max: 20,
-    value: 10,
+    max: 50,
+    value: 25,
     update: update
   }
 };
