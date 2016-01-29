@@ -7,7 +7,7 @@ var io = require('socket.io')(server)
 
 app.use(express.static(__dirname + '/public'))
 
-server.listen(3000, function() {
+server.listen(process.env.PORT || 3000, function() {
   console.log('listening...');
 });
 
