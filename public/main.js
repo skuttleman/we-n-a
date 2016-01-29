@@ -1,7 +1,11 @@
 var socket = io();
 var creature = new (function() {
   var state = {
+<<<<<<< HEAD
     ratio: {
+=======
+    size: {
+>>>>>>> acc58a65c6f1ef28d2727791e8f958453f3a05ec
       height: 300,
       width: 300,
       baseHeight: 300,
