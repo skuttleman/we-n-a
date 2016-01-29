@@ -15,12 +15,13 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
   padding: 35px;
 }
 
 .organelle {
-  width:  33%;
-  height: 33%;
+  width:  30%;
+  height: 30%;
   background: rgba(20, 20, 20, 0.3);
   border-radius: 50%;
   display: flex;
@@ -29,24 +30,44 @@ body {
   justify-content: center;
 }
 
+.organelle:nth-child(1),
+.organelle:nth-child(3),
+.organelle:nth-child(7),
+.organelle:nth-child(9) {
+  background: hsla(360, 100%, 100%, 0);;
+  /*display: none;  */
+}
+.organelle:nth-child(2),
+.organelle:nth-child(4),
+.organelle:nth-child(6),
+.organelle:nth-child(8) {
+
+}
+
+
 .nucleus {
   background: tomato;
 }
 
+.inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .spine-left {
   width: 0px;
   height: 0px;
-  border-left:   10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right:  10px solid rgba(255, 255, 255, 0.3);
+  border-left:   5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right:  5px solid rgba(255, 255, 255, 0.3);
   border-top:    5px solid rgba(255, 255, 255, 0.3);
 }
 .spine-right {
   width: 0px;
   height: 0px;
-  border-left:   10px solid rgba(255, 255, 255, 0.3);
-  border-bottom: 10px solid transparent;
-  border-right:  10px solid transparent;
+  border-left:   5px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 5px solid transparent;
+  border-right:  5px solid transparent;
   border-top:    5px solid rgba(255, 255, 255, 0.3);
 }
 
